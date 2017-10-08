@@ -104,8 +104,6 @@ window.baz; // 74
 
 Puedes ver como esto puede rápidamente volverse problemático! Miremos a los dos grandes problemas que nos enfrentamos:
 
-
-
 #### PROBLEMA UNO: COLISIÓN DE NOMBRES
 
 Por ejemplo, que pasa si agregamos una `fileC.js`...
@@ -199,7 +197,6 @@ Sin embargo, con el amanecer de la edad de AJAX y JQuery, las aplicaciones web s
 
 Aquí es donde las tecnologías como Webpack aparecen. Pero antes de eso, vamos a divagar un poco sobre como NodeJS cambió el juego al popularizar un cierto sistema de módulos para JavaScript del **lado del servidor**. 
 
-
 ### Entra Node
 
 En este punto, ya estas familiarizado con el sistema de módulos que viene con NodeJs. Cada archivo JavaScript en un programa de Node es un módulo - las variables y funciones que declares en un módulo nunca van a colisionar con esas que tu declarás en otro módulo.
@@ -227,22 +224,21 @@ var foo = "no sweat"; // no tiene idea que usamos el mismo nombre para una varia
 someFunc(); // 42
 ```
 
-Libertad del browser permite a Node implementar un sistema de módulos, basado en uno propuesto por CommonJS, que ayudo a elevar a JavaScript a ser un "lenguaje de programación real" en los ojos de muchos. 
+Salirse del browser permitió a Node implementar un sistema de módulos en JS, basado en un sistema propuesto por ![CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1.1), que ayudo a elevar a JavaScript a ser un "lenguaje de programación real" en los ojos de muchos. 
 
 Sin embargo, solo JavaScript del lado del servidor puede usar `require` y `module.exports` - JavaScript escrito en browsers todavía era renegado a los riesgos y fragilidades de tags `<scripts>`. Sin embargo, ahora que hemos experimentado modularidad real con Node, nos debemos preguntar - ¿podemos implementar un sistema de módulos real para JavaScript desde browser también? ¿Hay una herramienta que podamos crear para que podamos esencialmente usar `require` y `module.exports` en nuestro Javascript para el browser también?
 
 ### JavaScript Moderno
 
-La respuesta a esa pregunta en la sección anterior es si, por supuesto! Herramientas como Webpack (como también otras como browserfy, el cual no vamos a estar usando) nos permiten escribir archivos Javascript para el browser como si fueran módulos de Node - podemos usar `require` y `module.exports`, y declarar variables sin tener que preocuparse sobre contaminar el objeto global window. Es realmente un gran momento para ser un desarrollador web! 
+La respuesta a esa pregunta en la sección anterior es si, por supuesto! Herramientas como Webpack (como también otras como browserfy, el cúal no vamos a utilizar) nos permiten escribir archivos Javascript para el browser como si fueran módulos de Node - podemos usar `require` y `module.exports`, y declarar variables sin tener que preocuparse sobre contaminar el objeto global window. Es realmente un gran momento para ser un desarrollador web! 
 
 ## Punto de Arranque 
 
 ### Clona el Repo
 
-En este workshop, vamos a usar Webpack refactorear nuestro amado World Wide Whiteboard a una verdadera obra de arte de modularizar.
+En este workshop, vamos a usar Webpack para refactorear nuestro amado World Wide Whiteboard a una verdadera obra de arte modularizada.
 
 Empezá forkeando y clonando este repo. Contiene la solución al World Wide Whiteboard workshop. Tomate unos minutos para re-familiarizarte con el (ya que puede diferir un poco a tu solución).
-
 
 ### Entendiendo Nuestras Dependencias
 
@@ -282,7 +278,7 @@ app.js
 
 ### Overview
 
-Webpack es una herramienta extremadamente poderosa y flexible para construir Javascript, y sus características van mas allá de las cuales tomamos ventaja hoy. Igual, primero, te estarás preguntando... ¿qué es Webpack?  
+__Webpack__ es una herramienta extremadamente poderosa y flexible para construir Javascript, y sus características van mas allá de las cuales tomamos ventaja hoy. Igual, primero, te estarás preguntando... ¿qué es Webpack?  
 
 Webpack es un módulo de Node que podes instalar usando npm. Si recordás usando el compilador node-sass de Shoestring para compilar (o, más apropiadamente "transpilar" - ver la nota debajo) nuestros archivos SCSS a un solo archivo CSS - Webpack es como eso! 
 
@@ -324,7 +320,6 @@ Para que webpack sea capaz de construir nuestro archivo apropiadamente, necesita
 - Un archivo para usar como un punto de arranque donde va a comenzar a construir
 - Un lugar para poner el output del programa (nuestro JavaScript transformado)
 
-
 Vamos a dárselos: 
 
 1. En la raíz del directorio de nuestro repo, crea un archivo llamado `webpack.config.js`. Notá que el nombre "webpack.config.js" importa (de la misma manera el nombre package.json importa) - el programa webpack va a buscar automáticamente por este archivo con ese nombre. 
@@ -361,7 +356,6 @@ Ahora, anda y chequeá el contenido del directorio `browser/`. Deberías ver una
 Normalmente no veremos dentro de nuestro `bundle.js` (y se vuelven bastante grandes!), ni vamos a ir a las especificidades de como webpack hace su magia, pero podés ver la idea - webpack toma tu código JavaScript y lo envuelve en una lógica de módulos muy sofisticada. De esta forma, podemos empezar usando nuestros archivos Javascript del lado del cliente como módulos! 
 
 Estas emocionado? Yo también lo estoy! Continuemos!
-
 
 > Nota al pie: Dado que los artefactos del build como `bundle.js` son creados del código fuente, eso lo hacen información redundante de una perspectiva del control de versionado. En otras palabras, builds son normalmente agregados al `.gitignore`. Vamos a ignorar que en este workshop por un tema simplicidad.
 
@@ -415,8 +409,8 @@ Comentá los `<script>` tags actuales en nuestro `index.html`. En su lugar, escr
 
 El momento ha llegado! Ve a través de los archivos Javascript y convertilos en modules! Si necesitas ayuda, aquí hay una checklist de cosas que podés hacer en cada archivo:
 
-- Remové las IFFE rodeando - ya no las vas a necesitar más. (Quiz: por qué?)
-- Identifica que cosas ese archivo expone al objeto `window` y y haz eso `module.exports`.
+- Remové las IFFE que rodean al código - ya no las vas a necesitar más. (Quiz: por qué?)
+- Identifica que cosas ese archivo expone al objeto `window` y y pon eso `module.exports`.
 - Identificá cualquier cosa que ese archivo obtiene de otro archivo en el objeto window y cambialo a que sea requerido.
   + (nota: esto por supuesto no incluye cosas como `window.location.origin` o `window.addEventListner` - estamos manipulando el contexto global por gusto ahí)
 
@@ -440,9 +434,9 @@ Sin embargo, si estuviste paseando por el Internet, podés haber notado algo ext
 
 Eso, mi amigo, es la sintaxis de módulos ECMAScript, introducida en ES6.
 
-Permitime explicar - luego Node popularizó el uso de `require` y `module.exports`, los mantenedores de la especificación de ECMAScript reconocieron la necesidad de un sistema de módulos nativo en JavaScript. Sin embargo, en vez de basar este nuevo sistema en la popular sintaxis de Node, la especificación aprobó una sintaxis diferente usando keywords como `import` y `export` - el cual es mucho más similar a la sintaxis que usa Java. 
+Permitime explicar - luego de que Node popularizó el uso de `require` y `module.exports`, los mantenedores de la especificación de ECMAScript reconocieron la necesidad de un sistema de módulos nativo en JavaScript. Sin embargo, en vez de basar este nuevo sistema en la popular sintaxis de Node, la especificación aprobó una sintaxis diferente usando keywords como `import` y `export` - el cual es mucho más similar a la sintaxis que usa Java. 
 
-Para muchos, esto fue una decepción. Para otros, fue una victoria para análisis estático (el cual es imposible con la sintaxis de Node). Pero no nos detengamos en política - el sistema import/export es ahora parte del estándar de ECMAScript, y a pesar que no este aún soportado por ningún browser o por Node, va a eventualmente recibir soporte nativo en todos esos ambientes. 
+Para muchos, esto fue una decepción. Para otros, fue una victoria para ![análisis estático](https://en.wikipedia.org/wiki/Static_program_analysis) (el cual es imposible con la sintaxis de Node). Pero no nos detengamos en política - el sistema import/export es ahora parte del estándar de ECMAScript, y a pesar que no este aún soportado por ningún browser o por Node, va a eventualmente recibir soporte nativo en todos esos ambientes. 
 
 Afortunadamente para nosotros, Webpack está aquí para salvar el día! Webpack reconoce y soporta AMBOS `require`/`module.exports` y`import`/`export`! (Aunque en cualquier proyecto, deberías elegir usar uno o el otro - mezclar los dos va a ser el código difícil de entender y puede de hecho resultar en errores dado que Webpack tiene la habilidad de realizar optimizaciones extra en el código usando `import/export`).
 

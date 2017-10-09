@@ -323,8 +323,7 @@ Para que webpack sea capaz de construir nuestro archivo apropiadamente, necesita
 Vamos a dárselos: 
 
 1. En la raíz del directorio de nuestro repo, crea un archivo llamado `webpack.config.js`. Notá que el nombre "webpack.config.js" importa (de la misma manera el nombre package.json importa) - el programa webpack va a buscar automáticamente por este archivo con ese nombre. 
-2. Copiá y pegá el siguiente código en tu `webpack.config.js`
-Copy and paste the following code into your webpack.config.js
+2. Copiá y pegá el siguiente código en tu `webpack.config.js`.
 
 ```js
 module.exports = {

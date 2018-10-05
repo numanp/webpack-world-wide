@@ -1,6 +1,4 @@
-(function () {
 
-  window.EventEmitter = EventEmitter;
 
   // our EventEmitter contructor function
   function EventEmitter () {
@@ -42,4 +40,5 @@
     });
 
   };
-})();
+
+  export default EventEmitter
